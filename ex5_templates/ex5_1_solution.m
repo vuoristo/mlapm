@@ -3,22 +3,25 @@ rand('state', 999); %#ok<RAND>
 randn('state', 999); %#ok<RAND>
 %clf;
 % Make some simulated data :
-l = 0.2; r1 = 0.5;
-for r = 1:100
-	rad = r1 + rand*l;  theta = rand*2*pi;
-	X(1,r) = rad*cos(theta); X(2,r) = rad*sin(theta);
-end
+% l = 0.2; r1 = 0.5;
+% for r = 1:100
+% 	rad = r1 + rand*l;  theta = rand*2*pi;
+% 	X(1,r) = rad*cos(theta); X(2,r) = rad*sin(theta);
+% end
 
 %Visualize simulated data
-figure(1);
-plot(X(1,:),X(2,:),'o');
-title('Data');
+% figure(1);
+% plot(X(1,:),X(2,:),'o');
+% title('Data');
+load('projectdata');
+X = testData;
 D = size(X,1); % dimension of the space
 N = size(X,2); % number of data points
 
 %Initialize parameters
-H = 10; %number of mixture components
-r = randperm(N); m = X(:,r(1:H)); % initialise the centres to random datapoints
+H = 7; %number of mixture components
+r = randperm(N); 
+m = X(:,r(1:H)); % initialise the centres to random datapoints
 s2 = mean(diag(cov(X')));
 S = repmat(s2*eye(D),[1 1 H]); % initialise the variances to be large
 P = ones(H,1)./H;  % intialise the component probilities to be uniform
@@ -69,15 +72,15 @@ figure(2);
 plot(logl,'-o'); title('log likelihood');
 
 %Visualize the trained mixture model
-figure(3);
-plot(X(1,:),X(2,:),'o'); hold on;
-for i=1:H
-    [E V]=eig(S(:,:,i));dV=sqrt(diag(V)); 
-    theta=0:0.3:2*pi;
-    p(1,:)= dV(1)*cos(theta); p(2,:)= dV(2)*sin(theta);
-    x = E*p+repmat(m(:,i),1,length(theta));
-    plot(x(1,:),x(2,:),'r-','linewidth',2)
-end;
-title('Trained GMM Model');
-drawnow;
+% figure(3);
+% plot(X(1,:),X(2,:),'o'); hold on;
+% for i=1:H
+%     [E V]=eig(S(:,:,i));dV=sqrt(diag(V)); 
+%     theta=0:0.3:2*pi;
+%     p(1,:)= dV(1)*cos(theta); p(2,:)= dV(2)*sin(theta);
+%     x = E(1:2,1:2)*p+repmat(m(1:2,i),1,length(theta));
+%     plot(x(1,:),x(2,:),'r-','linewidth',2)
+% end;
+% title('Trained GMM Model');
+% drawnow;
 hold off
