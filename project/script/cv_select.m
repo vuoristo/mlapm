@@ -1,4 +1,4 @@
-function [ opts, h ] = cv_select( data, components )
+function [ opts, h ] = cv_select( X, components )
 %CV_SELECT Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -11,7 +11,7 @@ opts.minDeterminant=0.0001;
 
 loglik=zeros(components,FOLD_COUNT);
 
-Nlearning=size(data,2);
+Nlearning=size(X,2);
 order = randperm(Nlearning);
 
 for H=1:components; % number of mixture components 
@@ -21,8 +21,8 @@ for H=1:components; % number of mixture components
             ceil(fold * Nlearning / FOLD_COUNT) + 1:Nlearning]); % cv training index
         val_indices = setdiff(1:Nlearning,training_indices); % cv validation index
 
-        X_train=data(:,training_indices);  % cv training data
-        Xval=data(:,val_indices); % cv validation data
+        X_train=X(:,training_indices);  % cv training data
+        Xval=X(:,val_indices); % cv validation data
         %train model
         [P1,m1,S1,loglik1,phgn1]=GMMem(X_train,H,opts); % fit model
         

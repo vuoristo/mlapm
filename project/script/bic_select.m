@@ -1,4 +1,4 @@
-function [ opts, bic_h, aic_h ] = bic_select( data, components )
+function [ opts, bic_h, aic_h ] = bic_select( X, components )
 %BIC Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -7,7 +7,7 @@ opts.plotsolution=0;
 opts.maxit=100;
 opts.minDeterminant=0.0001;
 
-ndim = size(data,2);
+ndim = size(X,2);
 
 loglik=zeros(components,1);
 BIC = zeros(components,1);
@@ -15,11 +15,11 @@ AIC = zeros(components,1);
 numParams = zeros(components,1);
 
 for H=1:components; % number of mixture components
-        [P1,m1,S1,loglik1,phgn1]=GMMem(data,H,opts); % fit class1 data
-        loglik(H)=loglik1;
-        numParams(H) = H * ndim*(ndim+1)/2 + H*ndim + (H-1); % number of parameters in the model
-        BIC(H) = -2*loglik(H) + numParams(H)*log(size(data,2)); % BIC for the model
-        AIC(H) = -2*loglik(H) + 2*numParams(H);
+    [P1,m1,S1,loglik1,phgn1]=GMMem(X,H,opts); % fit class1 data
+    loglik(H)=loglik1;
+    numParams(H) = H * ndim*(ndim+1)/2 + H*ndim + (H-1); % number of parameters in the model
+    BIC(H) = -2*loglik(H) + numParams(H)*log(size(X,2)); % BIC for the model
+    AIC(H) = -2*loglik(H) + 2*numParams(H);
 end
 
 %plot the BIC curve
