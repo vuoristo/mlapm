@@ -9,7 +9,12 @@ As we can see from the table in the results section, the dimensionality reductio
 
 The results for model selection criteria (AIC, BIC, and likelihood for cross-validation) are plotted in the figures in the results section. Each plot contains the results for the complete dataset, and data that is reduced to 2, 4 and 5 dimensions.
 
-\subsection{Unsupervised Approach}
+\subsection{Supervised Approach}
+We did the supervised Gaussian Mixture model fitting by first training a mixture model with the training data for each class label, such that we end up having 6 different Gaussian Mixture models. After that we use those models to predict labels for the test data, and choose the class that maximizes the probability of the point being in that Gaussin model.
+
+We got 44.44\% accuracy with this tactic, and comparing it to the k-nearest-neighbour classifier using 5, 10, 15, 20 and 25 nearest neighbours, we see that kNN classifier works much better, resulting in 68.52\%, 59.26\%, 59.26\%, 59.26\%, 61.11\% classification accuracy.
+
+We think that this has something to do with our very bad approach, or the multidimensionality of the data.
 
 
 %%% Local Variables:
