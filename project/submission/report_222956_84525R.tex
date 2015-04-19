@@ -7,10 +7,32 @@
 \usepackage{amsthm}
 \usepackage{hyperref, url}
 \usepackage{listings}
+\usepackage{verbatim}
+\usepackage{color}
 \usepackage[T1]{fontenc}
 
 \DeclareMathOperator*{\argmin}{arg\!\min}
 \DeclareMathOperator*{\argmax}{arg\!\max}
+
+\newcommand\verbatimtable[2] {
+  \begin{table}[h]
+    \begin{center}
+      \verbatiminput{#1}
+    \end{center}
+    \caption{#2}
+    \label{tab:#1}
+  \end{table}
+}
+
+\newcommand\figureFromFile[3] {
+  \pagebreak
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{#1.#2}
+    \caption{#3}
+    \label{fig:#1}
+  \end{figure}
+}
 
 \lstdefinestyle{linenumbering} {
   numbers=left,

@@ -1,0 +1,5 @@
+PCA dimensions  AIC	BIC	CV
+None		2	3	10
+2		7	10	6
+4		6	7	5
+5		4	4	10

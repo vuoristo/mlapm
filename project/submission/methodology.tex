@@ -1,5 +1,9 @@
-\subsection{Usupervised Approach}
-We did the unsupervised model selection by using few different 'training-validation-testing' discussed in the lecture 7 slides. Three different selection criteria: BIC, AIC, and cross-validation. BIC and AIC both penalize the likelihood of the model. Using the combined training data and test data, ...
+\subsection{Unsupervised Approach}
+We did the unsupervised model selection by using few different 'training-validation-testing' setups discussed in the lecture 7 slides. Three different selection criteria were used: BIC, AIC, and cross-validation. BIC and AIC both penalize the likelihood of the model, where as the cross-validation is often used when the goal is prediction, that is, how accurately a model will perform in practice.
+
+We started by fitting 10 different Gaussian Mixture models, with 1-10 mixture components, to the using the combined training data and test data (complete\_data in the code), and choosing the 'best' one by minimizing the AIC and BIC values or maximizing the likelihood for the cross-validation. The cross-validation was done by using fold-count of 5 and 10, however the results were pretty much identical so we chose to omit the results for fold-count 10 and only consider the case of 5.
+
+After fitting the model, we choose calculate the AIC and BIC values for the fitted model.
 
 It seems like the multidimensionality of the data might cause the poor performace of the model selection. Thus we also did the model selection by first applying dimensionality reduction (principal component analysis) for the data. We ran the same tests for the data reduced to 2, 4 and 5 dimensions. The first two principal components explain 73.94\% of the data, first four components 94.92\% and the first five components 98.23\% of the total variance.
 
