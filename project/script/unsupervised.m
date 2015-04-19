@@ -26,21 +26,28 @@ figure(3);
 title('Model Selection (Cross Validation)');
 xlabel('Number of Mixture Components');ylabel('Likelihood');
 
+% HS is the suggested count of GMM components for each
+% criterion/dimension combo
+HS = zeros(length(PCA_N+1), 3);
+
 % Model selection using the full data
 [bic, aic] = bic_select(complete_data', MAX_COMPONENTS);
+[v, bic_h]=min(bic);
+HS(1, 1) = bic_h;
+[v, aic_h]=min(aic);
+HS(1, 2) = aic_h;
 figure(1); hold on;
 plot(1:MAX_COMPONENTS, bic, [COLORS(1), '-o']);
 figure(2); hold on;
 plot(1:MAX_COMPONENTS, aic, [COLORS(1), '-o']);
 
 loglik = cv_select(complete_data', MAX_COMPONENTS, FOLD_COUNT);
+[v,cv_h]=max(mean(loglik,2));
+HS(1, 3) = cv_h;
 figure(3); hold on;
 plot(1:MAX_COMPONENTS, mean(loglik, 2), [COLORS(1), '-o']);
 
 % Model selection using dimension reduced data
-% H's is the suggested count of GMM components for each
-% criterion/dimension combo
-HS = zeros(length(PCA_N+1), 3);
 for i=1:length(PCA_N)
     pca_n = PCA_N(i);
     [coeff, pca_data, latent, tsquared, explained, mu] = ...
@@ -48,9 +55,9 @@ for i=1:length(PCA_N)
 
     [bic, aic] = bic_select(pca_data', MAX_COMPONENTS);
     [v, bic_h]=min(bic);
-    HS(i, 1) = bic_h;
+    HS(i+1, 1) = bic_h;
     [v, aic_h]=min(aic);
-    HS(i, 2) = aic_h;
+    HS(i+1, 2) = aic_h;
 
     figure(1); hold on;
     plot(1:MAX_COMPONENTS, bic, [COLORS(i+1), '-o']);
@@ -59,7 +66,7 @@ for i=1:length(PCA_N)
 
     loglik = cv_select(pca_data', MAX_COMPONENTS, FOLD_COUNT);
     [v,cv_h]=max(mean(loglik,2));
-    HS(i, 3) = cv_h;
+    HS(i+1, 3) = cv_h;
 
     figure(3); hold on;
     plot(1:MAX_COMPONENTS, mean(loglik, 2), [COLORS(i+1), '-o']);
@@ -77,11 +84,12 @@ opts.minDeterminant=0.0001;
 % Fit GMM's with different amount of mixture components
 % and compare the predictions against the ground-truth
 % labels.
+accuracy = zeros(10,1);
 for h=1:10
     [P1,m1,S1,loglik1,phgn1]=GMMem(complete_data',h,opts); % fit to data
     [Y,I] = max(phgn1); % I is the point class list
 
-    correct = (I == complete_labels);
+    correct = (I == complete_labels');
     accuracy(h) = sum(correct) / length(complete_labels);
 
 %     %Predict using the full trained model
