@@ -11,8 +11,8 @@ complete_labels = [trainLabels; testLabels];
 
 totalComponents = 10; %max number of mixture components
 
-% [bic_opts, bic_h] = bic_select(complete_data', totalComponents);
-[cv_opts, cv_h] = cv_select(complete_data', 20);
+[bic_opts, bic_h, aic_h] = bic_select(complete_data', totalComponents);
+[cv_opts, cv_h] = cv_select(complete_data', totalComponents);
 
 % %Now train full model with selected number of mixture components
 % [P1,m1,S1,loglik1,phgn1]=GMMem(data,h,opts); % fit to data

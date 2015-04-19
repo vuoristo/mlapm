@@ -6,7 +6,7 @@ FOLD_COUNT=5;  %number of folds
 
 opts.plotlik=0;
 opts.plotsolution=0;
-opts.maxit=100;
+opts.maxit=200;
 opts.minDeterminant=0.0001;
 
 loglik=zeros(components,FOLD_COUNT);
