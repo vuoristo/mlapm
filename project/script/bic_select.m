@@ -7,7 +7,7 @@ opts.plotsolution=0;
 opts.maxit=100;
 opts.minDeterminant=0.0001;
 
-ndim = size(X,2);
+ndim = size(X,1);
 
 loglik=zeros(components,1);
 BIC = zeros(components,1);
