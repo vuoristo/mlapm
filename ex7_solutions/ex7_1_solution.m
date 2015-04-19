@@ -1,3 +1,6 @@
+clear all;
+close all;
+
 rand('state', 999); %#ok<RAND>
 randn('state', 999); %#ok<RAND>
 
