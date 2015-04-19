@@ -1,4 +1,4 @@
-function [ opts, bic_h, aic_h ] = bic_select( X, components )
+function [ BIC, AIC ] = bic_select( X, components )
 %BIC Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -22,19 +22,14 @@ for H=1:components; % number of mixture components
     AIC(H) = -2*loglik(H) + 2*numParams(H);
 end
 
-%plot the BIC curve
-figure;
-plot(1:components, BIC,'bo-');
-xlabel('Number of Mixture Components');ylabel('BIC')
-title('Model Selection (BIC)');
-[v,bic_h]=min(BIC); %select the number of mixture components which minimizes the BIC 
-
-%plot the AIC curve
-figure;
-plot(1:components, AIC,'bo-');
-xlabel('Number of Mixture Components');ylabel('AIC')
-title('Model Selection (AIC)');
-[v, aic_h]=min(AIC); %select the number of mixture components which minimizes the BIC 
+% [v,bic_h]=min(BIC); %select the number of mixture components which minimizes the BIC 
+% 
+% %plot the AIC curve
+% figure;
+% plot(1:components, AIC,'bo-');
+% xlabel('Number of Mixture Components');ylabel('AIC')
+% title('Model Selection (AIC)');
+% [v, aic_h]=min(AIC); %select the number of mixture components which minimizes the BIC 
 
 end
 
